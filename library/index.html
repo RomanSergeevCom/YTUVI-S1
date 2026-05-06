@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YTUVI-S1 · Library</title>
+<style>
+:root {
+  --bg:#0e1116; --surface:#171b23; --surface2:#1c2129; --border:#2a313d;
+  --fg:#eaecef; --fg-dim:#9aa3b2;
+  --accent:#e8c876; --accent-2:#7ec3ff; --accent-3:#9ad08c;
+  --tag-md:#9ad08c; --tag-html:#e8c876; --tag-json:#c084fc; --tag-srt:#7ec3ff;
+  --tag-txt:#94a3b8; --tag-xlsx:#22c55e;
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; background:var(--bg); color:var(--fg);
+  font:15px/1.6 -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", sans-serif; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 36px 28px 100px; }
+
+a { color: var(--accent-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1 { font-size: 28px; letter-spacing:-.01em; margin: 0 0 6px; }
+h2 { font-size: 18px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom:8px; margin: 36px 0 14px; }
+h3 { font-size: 14px; color: var(--fg-dim); text-transform: uppercase; letter-spacing: .08em; margin: 18px 0 8px; }
+
+header.hero { padding-bottom: 22px; border-bottom: 2px solid var(--border); }
+header.hero .sub { color: var(--fg-dim); font-size: 14px; margin-top: 6px; line-height: 1.55; }
+header.hero .nav { margin-top: 12px; display:flex; gap:8px; flex-wrap:wrap; }
+header.hero .nav a { background: var(--surface); border: 1px solid var(--border); padding: 5px 12px; border-radius: 6px; font-size: 12px; color: var(--fg); }
+header.hero .nav a:hover { border-color: var(--accent-2); text-decoration: none; }
+
+.intro { background: var(--surface); border-left: 3px solid var(--accent-3); padding: 12px 16px; border-radius: 4px; margin: 16px 0 28px; font-size: 14px; color: var(--fg-dim); line-height: 1.65; }
+.intro strong { color: var(--fg); }
+.intro a { color: var(--accent-3); }
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 24px; }
+table th { text-align: left; color: var(--fg-dim); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: top; }
+table tr:hover { background: rgba(126,195,255,.03); }
+table td.f { width: 38%; }
+table td.f a { font-weight: 500; color: var(--fg); }
+table td.f a:hover { color: var(--accent-2); }
+table td.d { color: var(--fg-dim); font-size: 13px; line-height: 1.5; }
+table td.s { width: 80px; color: var(--fg-dim); font-size: 12px; font-family: ui-monospace, monospace; text-align: right; }
+table td.t { width: 60px; text-align: right; padding-right: 14px; }
+
+.ext { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: .04em; margin-left: 6px; vertical-align: 2px; }
+.ext-md { background: rgba(154,208,140,.15); color: var(--tag-md); }
+.ext-html { background: rgba(232,200,118,.15); color: var(--tag-html); }
+.ext-json { background: rgba(192,132,252,.15); color: var(--tag-json); }
+.ext-srt { background: rgba(126,195,255,.15); color: var(--tag-srt); }
+.ext-txt { background: rgba(148,163,184,.15); color: var(--tag-txt); }
+.ext-xlsx { background: rgba(34,197,94,.15); color: var(--tag-xlsx); }
+
+footer { margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--border); color: var(--fg-dim); font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>📚 YTUVI-S1 · Library</h1>
+  <div class="sub">Все исходники сезона 1 в одном месте: транскрипты Zoom-встреч, idea-файлы выпусков, YouTube-референсы, готовые бриф-документы. Зеркало находится в Google Drive.</div>
+  <div class="nav">
+    <a href="../">← На главную S1</a>
+    <a href="https://github.com/RomanSergeevCom/YTUVI-S1/tree/main/library" target="_blank">GitHub source</a>
+  </div>
+</header>
+
+<div class="intro">
+  <strong>Структура:</strong> 5 разделов по типам материалов. <strong>Видео не хранятся</strong> здесь —
+  только текст. Zoom-видео интервью с Анастасией —
+  <a href="https://drive.google.com/drive/folders/1yGv8cO9LmpH0id45QtLss8Hlr4HRZ0n1?usp=sharing" target="_blank">в отдельной папке Google Drive</a>.
+  Список всех видео сезона —
+  <a href="https://docs.google.com/spreadsheets/d/1yPVg3MvXglANpmigtmS_vOSDGOIwMGn7x1QQGEeXSo8/edit?usp=sharing" target="_blank">в Google Sheet</a>.
+</div>
+
+<h2>00 · Channel — профиль канала и общие документы</h2>
+<table>
+  <tr>
+    <td class="f"><a href="00_Channel/YTUVI.md">YTUVI.md</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Профиль канала: 4 пиллара контента, аудитория, ниша, формат.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="00_Channel/YTUVI-SEASON-1-MAP.md">YTUVI-SEASON-1-MAP.md</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Карта сезона 1: 6 выпусков + матрица 8 сквозных тем × выпуски, production order.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="00_Channel/YTUVI_meeting_2026-04-21.md">YTUVI_meeting_2026-04-21.md</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Конспект kickoff-встречи с Натальей Тузовой: outline, ключевые цитаты, открытые вопросы.</td>
+  </tr>
+</table>
+
+<h2>01 · Episodes — idea-файлы выпусков (6 шт.)</h2>
+<table>
+  <tr>
+    <td class="f"><a href="01_Episodes/YTUVI-001 Корунд · Рубин.md">YTUVI-001 Корунд · Рубин</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Концепт + структура + key points + цитаты с kickoff. Бирма, pigeon blood, insider-рынок, Harry Winston.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="01_Episodes/YTUVI-002 Корунд · Сапфир и Падпараджа.md">YTUVI-002 Корунд · Сапфир и Падпараджа</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Сапфир + fancy-цвета + падпараджа. Кашмир, рассвет/закат, beryllium diffusion.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="01_Episodes/YTUVI-003 Гранаты — Цаворит, Демантоид, Спессартин.md">YTUVI-003 Гранаты</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Семейство гранатов. Цаворит (легенда Бриджеса), демантоид (русский, horsetail), спессартин.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="01_Episodes/YTUVI-004 Шпинель и Корона Российской империи.md">YTUVI-004 Шпинель и Корона</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Якорная история — шпинель в Короне РИ. Mahenge, Mogok, cobalt blue, price index.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="01_Episodes/YTUVI-005 Изумруд — трещины, облагораживание, сертификация.md">YTUVI-005 Изумруд</a> <span class="ext ext-md">md</span></td>
+    <td class="d">99% масло. Colombia vs Zambia. Treatment-уровни F1/F2/F3. ⚠️ depth status: материал собирается отдельной prep-сессией.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="01_Episodes/YTUVI-006 Flagship · How to Identify Gemstones на русском.md">YTUVI-006 Flagship explainer</a> <span class="ext ext-md">md</span></td>
+    <td class="d">Короткий 5–8 мин пилот, повтор «How to Identify Gemstones» 1-в-1 на RU. По прямой рекомендации Натальи.</td>
+  </tr>
+</table>
+
+<h2>02 · Interviews — Zoom-транскрипты</h2>
+
+<h3>2026-04-21 — Наталья Тузова (kickoff, 42 мин)</h3>
+<table>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-04-21_Natalia_Tuzova_kickoff/transcript.json">transcript.json</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Whisper large-v3 + Pyannote diarization, word-level timestamps. 245 сегментов, 2 спикера.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-04-21_Natalia_Tuzova_kickoff/transcript.srt">transcript.srt</a> <span class="ext ext-srt">srt</span></td>
+    <td class="d">Субтитры с маркером Speaker 1/2.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-04-21_Natalia_Tuzova_kickoff/transcript_wordlevel.srt">transcript_wordlevel.srt</a> <span class="ext ext-srt">srt</span></td>
+    <td class="d">Пословные субтитры (для captions в Premiere).</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-04-21_Natalia_Tuzova_kickoff/transcript.txt">transcript.txt</a> <span class="ext ext-txt">txt</span></td>
+    <td class="d">Plain text для быстрого поиска.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-04-21_Natalia_Tuzova_kickoff/transcript.xlsx">transcript.xlsx</a> <span class="ext ext-xlsx">xlsx</span></td>
+    <td class="d">Excel-таблица с тайм-кодами, спикерами и текстом.</td>
+  </tr>
+</table>
+
+<h3>2026-05-06 — Анастасия Атрашкевич (YTUVI-001 Рубин, 57 мин)</h3>
+<table>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-05-06_Anastasia_Atrashkevich/transcript.json">transcript.json</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Whisper large-v3 + Pyannote diarization. 245 сегментов, 7798 слов, 2 спикера (Настя 45 мин / Роман+Руслан 8 мин).</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-05-06_Anastasia_Atrashkevich/transcript.srt">transcript.srt</a> <span class="ext ext-srt">srt</span></td>
+    <td class="d">Субтитры с маркером Speaker 1/2.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-05-06_Anastasia_Atrashkevich/transcript_wordlevel.srt">transcript_wordlevel.srt</a> <span class="ext ext-srt">srt</span></td>
+    <td class="d">Пословные субтитры.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-05-06_Anastasia_Atrashkevich/transcript.txt">transcript.txt</a> <span class="ext ext-txt">txt</span></td>
+    <td class="d">Plain text.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="02_Interviews/2026-05-06_Anastasia_Atrashkevich/transcript.xlsx">transcript.xlsx</a> <span class="ext ext-xlsx">xlsx</span></td>
+    <td class="d">Excel-таблица.</td>
+  </tr>
+</table>
+
+<h2>03 · YouTube refs — референс-видео от Натальи (7 шт.)</h2>
+<table>
+  <tr>
+    <td class="f"><a href="03_YouTube_refs/Ruby_-King_Of_The_Gemstones_What_makes_Ruby_a_Great_Gem-_Ruby_buyers_guide_Tips__1xsfg2miLP8_en.json">Ruby — King Of The Gemstones</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Your Average Jeweler · 18:57 · 251 947 views. По теме <strong>YTUVI-001 Рубин</strong>.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="03_YouTube_refs/Top_10_Most_Beautiful_and_Expensive_Rubies_in_the_World_zBXRJKkIDhg_en.json">Top 10 Most Expensive Rubies</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Andrew Pidor · 10:10 · 204 845 views. По теме <strong>YTUVI-001 Рубин</strong>.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="03_YouTube_refs/Three_Precious_Gems_Rubies,_Emeralds,_Sapphires_VAbxAtEJ_LI_en.json">Three Precious Gems: Rubies, Emeralds, Sapphires</a> <span class="ext ext-json">json</span></td>
+    <td class="d">JTV · 46:47 · 1 329 228 views. По темам <strong>YTUVI-001 / 002 / 005</strong>.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="03_YouTube_refs/Spinel_Stone;_prices,_colors,_spinel_vs_ruby_comparison_&_more!_q3P6SKpmKvA_en.json">Spinel Stone — prices, colors, spinel vs ruby</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Dominique Flux · 25:04 · 26 241 views. По теме <strong>YTUVI-004 Шпинель</strong>.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="03_YouTube_refs/How_to_Identify_Gemstones_vm1iN65V-A0_en.json">How to Identify Gemstones</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Gemstones · 5:20 · 162 708 views. ⭐ <strong>Flagship для YTUVI-006</strong> — повторить 1-в-1 на RU.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="03_YouTube_refs/Gem_vs._Gem_Death_Match_KizQ_NFYHTY_en.json">Gem vs. Gem Death Match</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Gemstones · 5:04 · 780 403 views. Общий референс.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="03_YouTube_refs/The_Most_Essential_Gem_Tools_You_Should_Own_l_qAcXGWFRo_en.json">The Most Essential Gem Tools</a> <span class="ext ext-json">json</span></td>
+    <td class="d">Gemstones · 5:51 · 106 791 views. Общий референс по инструментам.</td>
+  </tr>
+</table>
+
+<h2>04 · Briefs — готовые HTML-документы для команды</h2>
+<table>
+  <tr>
+    <td class="f"><a href="04_Briefs/YTUVI_brief_full.html">YTUVI_brief_full.html</a> <span class="ext ext-html">html</span></td>
+    <td class="d">Полный бриф S1 — 6 выпусков, 7 reference-видео, цитаты Натальи распределены по камням, секция «Сертификация», полный Zoom-транскрипт встречи.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="04_Briefs/interview-prep.html">interview-prep.html</a> <span class="ext ext-html">html</span></td>
+    <td class="d">Producer-prep для интервью с Настей и Юлей: что знать, что у других, что спрашивать, inside от Натальи.</td>
+  </tr>
+  <tr>
+    <td class="f"><a href="04_Briefs/YTUVI01_Ruby_interview_Nastya_structured.html">YTUVI01_Ruby_interview_Nastya_structured.html</a> <span class="ext ext-html">html</span></td>
+    <td class="d">⭐ <strong>Структурированный транскрипт интервью с Анастасией Атрашкевич</strong> — для сценариста: 12 блоков (по сценарию + bonus + gap), цитаты с тайм-кодами + 49 моих комментариев (17 fact-check, 20 дополнений, 6 alert, 6 ok).</td>
+  </tr>
+</table>
+
+<footer>
+  YTUVI-S1 · Library · <a href="../">main page</a> · <a href="https://github.com/RomanSergeevCom/YTUVI-S1" target="_blank">repo</a>
+</footer>
+
+</div>
+</body>
+</html>
