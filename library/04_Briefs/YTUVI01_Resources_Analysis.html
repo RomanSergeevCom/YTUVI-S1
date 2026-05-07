@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YTUVI01 · Анализ ресурсов от Юли — что использовать и где</title>
+<style>
+:root {
+  --bg:#0e1116; --surface:#171b23; --surface2:#1c2129; --border:#2a313d;
+  --fg:#eaecef; --fg-dim:#9aa3b2;
+  --accent:#e8c876; --accent-2:#7ec3ff; --accent-3:#9ad08c;
+  --tier-script:#7ec3ff; --tier-bonus:#e8c876; --tier-gap:#f97066; --tier-exec:#9ad08c;
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; background:var(--bg); color:var(--fg);
+  font:16px/1.7 Georgia, "Iowan Old Style", "Charter", "Noto Serif", serif; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 36px 28px 120px; }
+a { color: var(--accent-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 { font: 700 28px/1.2 -apple-system, "Helvetica Neue", sans-serif; margin: 0 0 6px; }
+h2 { font: 700 20px/1.25 Georgia, serif; color: var(--accent); margin: 36px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+h3 { font: 600 16px/1.3 -apple-system, sans-serif; margin: 20px 0 8px; color: var(--accent-3); }
+header.hero { padding-bottom: 22px; border-bottom: 2px solid var(--border); margin-bottom: 16px; }
+header.hero .sub { color: var(--fg-dim); font-size: 14px; font-family: -apple-system, sans-serif; margin-top: 8px; line-height: 1.55; }
+nav.links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; font-family: -apple-system, sans-serif; }
+nav.links a { background: var(--surface); border: 1px solid var(--border); padding: 5px 12px; border-radius: 5px; font-size: 12px; color: var(--fg); }
+nav.links a:hover { border-color: var(--accent-2); text-decoration: none; }
+
+.resource { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent-2); border-radius: 6px; padding: 18px 22px; margin: 18px 0; }
+.resource.priority-high { border-left-color: var(--tier-exec); background: linear-gradient(180deg, rgba(154,208,140,.05), var(--surface)); }
+.resource.priority-low { border-left-color: var(--fg-dim); }
+.resource.unavailable { border-left-color: var(--tier-gap); opacity: .85; }
+.resource h3 { margin-top: 0; }
+.r-meta { display: flex; gap: 12px; flex-wrap: wrap; font-family: -apple-system, sans-serif; font-size: 12px; color: var(--fg-dim); margin: 6px 0 14px; }
+.r-meta .tag { background: var(--surface2); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--border); }
+.r-meta .tag.high { background: rgba(154,208,140,.15); color: var(--tier-exec); border-color: var(--tier-exec); }
+.r-meta .tag.low { background: rgba(154,162,178,.1); color: var(--fg-dim); }
+.r-meta .tag.unavail { background: rgba(249,112,102,.1); color: var(--tier-gap); border-color: var(--tier-gap); }
+.r-link { font-family: -apple-system, sans-serif; font-size: 13px; }
+
+.findings { background: var(--surface2); border-left: 2px solid var(--accent); padding: 12px 16px; border-radius: 4px; margin: 12px 0; font-size: 14.5px; line-height: 1.65; }
+.findings strong { color: var(--fg); }
+.findings em { color: var(--accent-3); font-style: normal; }
+
+.script-map { background: rgba(126,195,255,.06); border-left: 2px solid var(--accent-2); padding: 12px 16px; border-radius: 4px; margin: 12px 0; font-family: -apple-system, sans-serif; font-size: 14px; }
+.script-map .lbl { display: block; font-size: 11px; font-weight: 700; color: var(--accent-2); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.script-map ul { margin: 0; padding-left: 20px; }
+.script-map li { margin: 4px 0; }
+.script-map code { background: var(--surface); color: var(--accent); padding: 1px 6px; border-radius: 3px; font-size: 12px; }
+
+.gold { background: linear-gradient(135deg, rgba(232,200,118,.15), rgba(232,200,118,.05)); border: 1px solid var(--accent); border-radius: 6px; padding: 14px 18px; margin: 14px 0; font-size: 15px; line-height: 1.65; }
+.gold strong { color: var(--accent); }
+.gold .label { display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(232,200,118,.15); padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: .06em; margin-right: 8px; vertical-align: 2px; font-family: -apple-system, sans-serif; }
+
+.alert { background: rgba(249,112,102,.06); border-left: 2px solid var(--tier-gap); padding: 10px 14px; border-radius: 4px; margin: 10px 0; font-size: 14px; color: #d7dae1; line-height: 1.6; }
+.alert strong { color: var(--tier-gap); }
+
+footer { margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--border); color: var(--fg-dim); font-size: 12px; text-align: center; font-family: -apple-system, sans-serif; }
+
+.summary-table { width: 100%; border-collapse: collapse; font-family: -apple-system, sans-serif; font-size: 13.5px; margin: 14px 0 24px; }
+.summary-table th { text-align: left; color: var(--fg-dim); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.summary-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: top; }
+.summary-table td.r { width: 28%; }
+.summary-table td.b { width: 28%; }
+.summary-table td.b code { background: var(--surface); color: var(--accent); padding: 1px 6px; border-radius: 3px; font-size: 11.5px; }
+.summary-table td.v { color: var(--fg-dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>📚 YTUVI01 Рубин · Анализ ресурсов</h1>
+  <div class="sub">
+    Юля прислала <strong>7 web-ссылок + 1 текст + 2 фото</strong> в дополнение к интервью. Этот документ —
+    разбор каждого источника: <em>что в нём ценного, в какой блок сценария идёт, конкретные факты</em>.
+    Цель: дать сценаристу карту-навигатор, чтобы не открывать каждую ссылку самому.
+  </div>
+  <nav class="links">
+    <a href="YTUVI01_Ruby_interview_Yulia_structured.html">← Структурированный транскрипт Юли</a>
+    <a href="YTUVI01_Ruby_interview_Nastya_structured.html">↔ Транскрипт Атрашкевич</a>
+    <a href="../../">🏠 YTUVI-S1 главная</a>
+  </nav>
+</header>
+
+<h2>🗺️ Сводная таблица: ресурс → блок сценария</h2>
+
+<table class="summary-table">
+  <tr>
+    <th>Ресурс</th>
+    <th>Какой блок сценария</th>
+    <th>Главная ценность</th>
+  </tr>
+  <tr>
+    <td class="r">📜 Гемцентр МГУ — облагораживание</td>
+    <td class="b"><code>Облагораживание</code> · <code>Сертификация</code></td>
+    <td class="v">Полная LMHC-таблица, сравнение GIA / Gübelin / SSEF / LOTUS / российский ГОСТ</td>
+  </tr>
+  <tr>
+    <td class="r">⛏️ Гемс СПб — месторождения</td>
+    <td class="b"><code>Поле битвы</code> · <code>Месторождения</code></td>
+    <td class="v">Подробно по 7 странам: Бирма, Мадагаскар, Танзания, Мозамбик, Таиланд+Вьетнам, Индия</td>
+  </tr>
+  <tr>
+    <td class="r">👑 Marie Claire — королевские украшения</td>
+    <td class="b"><code>Hook</code> · <code>Royal stories</code></td>
+    <td class="v"><strong>Бомба:</strong> Тиара Елизаветы II = 96 рубинов → умерла в 96 лет</td>
+  </tr>
+  <tr>
+    <td class="r">⭐ Milana Silver — актрисы в рубинах</td>
+    <td class="b"><code>CTA</code> · <code>Современный рынок</code></td>
+    <td class="v">10 имён + бренды: Cartier, Bvlgari, Chopard. Список знаменитостей</td>
+  </tr>
+  <tr>
+    <td class="r">📄 article_legends_myths.txt</td>
+    <td class="b"><code>Вперёд в прошлое</code> · <code>Hook</code> · <code>Все исторические блоки</code></td>
+    <td class="v"><strong>Главный исторический источник.</strong> 40 KB готового текста</td>
+  </tr>
+  <tr>
+    <td class="r">🗺️ Карта месторождений (фото)</td>
+    <td class="b"><code>Поле битвы</code> · <code>B-roll</code></td>
+    <td class="v">Готовый визуал: Shigley 2010, GEMS &amp; GEMOLOGY</td>
+  </tr>
+  <tr>
+    <td class="r">🎨 Цветовая шкала (фото)</td>
+    <td class="b"><code>Эталон цвета</code> · <code>Pigeon Blood</code></td>
+    <td class="v">8 категорий красного — готовая инфографика для скрипта</td>
+  </tr>
+  <tr>
+    <td class="r">📜 Пробирная палата (probpalata.gov.ru)</td>
+    <td class="b"><code>Сертификация</code> · <code>Российский закон</code></td>
+    <td class="v">⚠️ Не открылся (timeout). Попробовать руками или через VPN</td>
+  </tr>
+  <tr>
+    <td class="r">💎 Дзен — ТОП-5 дорогих рубинов</td>
+    <td class="b"><code>Famous rubies</code> · <code>Аукционы</code></td>
+    <td class="v">⚠️ Требует Yandex SSO авторизацию. Открыть в браузере вручную</td>
+  </tr>
+  <tr>
+    <td class="r">📜 Livemaster — знаменитые рубины</td>
+    <td class="b"><code>Famous rubies</code> · <code>Hook</code></td>
+    <td class="v">⚠️ Не отдал контент через WebFetch. Открыть в браузере вручную</td>
+  </tr>
+</table>
+
+<h2>🥇 Самые ценные находки (top picks)</h2>
+
+<div class="gold">
+  <span class="label">🔥 Hook века</span>
+  <strong>Тиара Елизаветы II из Мьянмы (Marie Claire):</strong> жители Бирмы подарили королеве
+  <strong>96 рубинов</strong> со своих месторождений. По местному поверью, рубин защищает носителя от
+  стольких болезней, сколько в украшении камней. <strong>Елизавета II скончалась ровно в 96 лет.</strong>
+  <br><br>
+  Это идеальный <em>cold-open</em> для всего выпуска: загадка, мистика, цифра-совпадение.
+</div>
+
+<div class="gold">
+  <span class="label">🚨 Cursed</span>
+  <strong>Кольцо Сары Йоркской (Marie Claire):</strong> крупный рубин + 10 бриллиантов вокруг (помолвка
+  с принцем Эндрю). Брак длился ровно <strong>10 лет</strong>, скандалы, развод. Кольцо стало называться
+  «<em>cursed</em>», и при королевском дворе появился неофициальный запрет на рубиновые помолвочные кольца.
+  <br><br>
+  Сильный нарратив для блока «Royal stories» или для отдельного куска «темная сторона рубина».
+</div>
+
+<div class="gold">
+  <span class="label">💎 Аукционный рекорд</span>
+  <strong>Sunrise Ruby</strong> (Бирма Mogok, 25.59 ct, pigeon's blood, без обработки) — продан на
+  <strong>Sotheby's Geneva 2015 за $30.3M</strong> — около <strong>$1.18M / карат</strong>. Рекорд для
+  непрозрачных драгоценных камней. Цифра подтверждается двумя источниками Юли — Гемс СПб и её собственными
+  словами в интервью (id 141).
+</div>
+
+<h2>1. 📜 Подходы лабораторий к облагораживанию (Гемцентр МГУ)</h2>
+
+<div class="resource priority-high">
+  <h3>gem-center.ru/JI_article_mar2026_labrubytreat.htm</h3>
+  <div class="r-meta">
+    <span class="tag high">Приоритет: ВЫСОКИЙ</span>
+    <span class="tag">Тип: научная статья (RU)</span>
+    <span class="tag">Открыт ✅</span>
+  </div>
+
+  <div class="findings">
+    <strong>Что в статье:</strong> детальное сравнение систем маркировки облагораживания у мировых
+    геммологических лабораторий. Главный научный источник на русском по этой теме.<br><br>
+
+    <strong>Ключевые системы кодов:</strong><br>
+    • <strong>LMHC</strong> (международный комитет): NH/NTE, H/TE, TE1-TE5, FAH1-FAH3, F1-F3, C1-C3<br>
+    • <strong>GIA / Gübelin / SSEF</strong> — придерживаются LMHC, но степень опциональна<br>
+    • <strong>LOTUS Gemology (Бангкок)</strong> — самые детальные коды: H-FH, H-GF, H-D, FF-O, <strong>LGH</strong>
+    (свинцово-стеклянный гибрид), <strong>AS</strong> (составной камень). Указывают <em>частоту встречаемости</em>:
+    Common / Less common / Rare<br>
+    • <strong>Российский ГОСТ ТК-408</strong> (в разработке): H, FH, F, U. Поверхностная диффузия и
+    композиты <em>не соответствуют</em> ГОСТу<br>
+    • <strong>Геммологический Центр МГУ</strong> — следует LMHC, не указывает степени<br><br>
+
+    <strong>Ключевая мысль автора статьи:</strong> «При появлении новых методов облагораживания лаборатории
+    должны разрабатывать новые методы диагностики и создавать понятные коды».
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт:</span>
+    <ul>
+      <li>Блок «<strong>Облагораживание</strong>»: расширить упрощённую систему Юли (F/C/H/Be) до полной LMHC-таблицы
+      с пометкой «<em>в эфире на ТВ так не говорят, но в сертификате — именно эти коды</em>»</li>
+      <li>Блок «<strong>Сертификация</strong>»: фраза «<em>лаборатории договорились через LMHC, но степень
+      облагораживания всё равно опциональна</em>» — отличный мостик от теории к практике</li>
+      <li>Hook-возможность: «<em>знаешь, что код LGH на бирке означает не камень, а композит со стеклом?</em>»</li>
+    </ul>
+  </div>
+</div>
+
+<h2>2. ⛏️ Месторождения рубинов (Гемс СПб)</h2>
+
+<div class="resource priority-high">
+  <h3>gems.spb.ru/articles/place-of-extraction-of-ruby/</h3>
+  <div class="r-meta">
+    <span class="tag high">Приоритет: ВЫСОКИЙ</span>
+    <span class="tag">Тип: обзор-каталог (RU)</span>
+    <span class="tag">Открыт ✅</span>
+  </div>
+
+  <div class="findings">
+    <strong>География по 7 странам:</strong><br><br>
+
+    🇲🇲 <strong>Бирма (Mogok, Upper Burma)</strong> — pigeon's blood. <em>Sunrise Ruby</em> 25.59 ct,
+    Sotheby's Geneva 2015, $30.3M ($1.2M/ct).<br><br>
+
+    🇲🇬 <strong>Madagascar</strong> — 10–15 месторождений. <em>Vatomandy</em> — натуральный розовато-оранжевый
+    высокого качества. <em>Andilamen</em> — более новые геологически, низкая прозрачность, нужен heat
+    чтобы сравняться с бирманскими.<br><br>
+
+    🇹🇿 <strong>Tanzania (Songea)</strong> — насыщенный тёмно-красный, <strong>исключительная чистота — одна
+    из самых высоких в мире</strong>. Цвет ярче на меньших размерах. Облагораживается через
+    <strong>beryllium ion diffusion</strong>.<br><br>
+
+    🇲🇿 <strong>Mozambique (Montepuez)</strong> — высокая чистота, но <em>трудно отличить от pink sapphire</em>
+    — нужна углубленная гео-экспертиза.<br><br>
+
+    🇹🇭🇻🇳 <strong>Thailand &amp; Vietnam</strong> — заметная розоватость, неоднородность цвета не уберёт
+    никакая обработка.<br><br>
+
+    🇮🇳 <strong>India</strong> — низкая ценность из-за матовости, многочисленных включений и трещиноватости.
+    Не подходит для ювелирки.
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт:</span>
+    <ul>
+      <li>Блок «<strong>Поле битвы: Мьянма vs Мозамбик</strong>»: расширить с 2 стран до 6 — это даёт
+      контекст «<em>Бирма — эталон, остальные — претенденты с компромиссами</em>»</li>
+      <li>Конкретный hook: <em>«самые чистые рубины в мире — не из Бирмы, а из Tanzania Songea»</em>
+      (контр-интуитивно)</li>
+      <li>B-roll: использовать <strong>фото карты месторождений</strong> (она в библиотеке) пока озвучиваешь
+      этот блок</li>
+    </ul>
+  </div>
+</div>
+
+<h2>3. 👑 Королевские украшения с рубинами (Marie Claire)</h2>
+
+<div class="resource priority-high">
+  <h3>marieclaire.ru/.../proklyatogo-kolca-sary-iorkskoi-...</h3>
+  <div class="r-meta">
+    <span class="tag high">Приоритет: ВЫСОКИЙ</span>
+    <span class="tag">Тип: lifestyle-журнал (RU)</span>
+    <span class="tag">Открыт ✅</span>
+  </div>
+
+  <div class="findings">
+    <strong>🔥 Главная находка:</strong> королевские дома предпочитают бриллианты и почти не носят рубины
+    — из-за репутации «несчастливых». Главный пример — кольцо Сары Йоркской («cursed»).<br><br>
+
+    <strong>1. Бурманская тиара Елизаветы II</strong> — жители Бирмы подарили <strong>96 рубинов</strong>
+    со своих месторождений. По местному поверью, рубин защищает от стольких болезней, сколько камней в
+    украшении. <strong>Елизавета II скончалась ровно в 96 лет.</strong> 🎯<br><br>
+
+    <strong>2. Кольцо Сары Йоркской</strong> — крупный рубин + 10 бриллиантов. Брак с принцем Эндрю — ровно 10 лет.
+    Скандалы, развод. <strong>Неофициальный запрет</strong> на рубиновые помолвочные кольца при дворе после этого.<br><br>
+
+    <strong>3. Danish Ruby Tiara</strong> — заказ при Наполеоне.<br>
+    <strong>4. Peacock Ruby Tiara</strong> — любимая королевы Максимы Нидерландов.<br>
+    <strong>5. Ожерелье королевы Виктории</strong> — изначально с опалами, рубинами заменили.<br>
+    <strong>6. Многоярусное ожерелье королевы Камиллы</strong> — подарок короля Саудовской Аравии (хоть
+    она предпочитает розовый топаз).
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт:</span>
+    <ul>
+      <li><strong>HOOK всего эпизода</strong>: открыть выпуск с истории Елизаветы II — 96 рубинов и 96 лет —
+      это сразу зацепляет на 5 секунд</li>
+      <li>Блок «<strong>Royal stories</strong>» (новый, подвид «Famous rubies»): 6 королевских историй из
+      этой статьи — готовый storyboard</li>
+      <li><strong>Cursed-narrative</strong> как side-story: рубин — камень не для всех, у него есть тёмная
+      сторона. Хороший контраст с сценарием v0.1, где рубин — «king of gemstones»</li>
+    </ul>
+  </div>
+</div>
+
+<h2>4. ⭐ Топ-10 актрис в рубинах (Milana Silver)</h2>
+
+<div class="resource">
+  <h3>milanasilver.ru/.../top_10_vykhodov_aktris_v_rubinakh...</h3>
+  <div class="r-meta">
+    <span class="tag">Приоритет: средний</span>
+    <span class="tag">Тип: lifestyle-блог (RU)</span>
+    <span class="tag">Открыт ✅</span>
+  </div>
+
+  <div class="findings">
+    10 имён + бренды (без точных годов и описаний камней):<br><br>
+    1. <strong>Джейн Фонда</strong> — колье Cartier с рубинами и бриллиантами<br>
+    2. <strong>Хайди Клум</strong> — рубиновое колье $3M<br>
+    3. <strong>Карла Бруни</strong> — украшения с «рубинами-карамельками» Bvlgari<br>
+    4. <strong>Изабель Гулар</strong> — рубиновые серьги Chopard<br>
+    5. <strong>Петра Немцова</strong> — массивный браслет с рубинами Chopard<br>
+    6. <strong>Камилла Альвес</strong> — колье с 5 крупными рубинами Chopard<br>
+    7. <strong>Наталья Водянова</strong> — рубиновый гарнитур Chopard<br>
+    8. <strong>Пенелопа Крус</strong> — серьги Atelier Swarovski (Каннский фестиваль)<br>
+    9. <strong>Блейк Лайвли</strong> — серьги Lorraine Schwartz<br>
+    10. <strong>Виктория Бекхэм</strong> — рубиновое кольцо
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт:</span>
+    <ul>
+      <li>Блок «<strong>CTA / Современный рынок</strong>»: показать B-roll красных дорожек с рубинами —
+      зритель видит, что рубин — это <em>haute couture</em>, а не «бабушкин камень»</li>
+      <li>Блок «<strong>Бренды и статус</strong>»: повторение брендов <em>Chopard</em> (5 раз!), <em>Cartier</em>,
+      <em>Bvlgari</em> — намёк на то, кто доминирует на рубиновом рынке haute joaillerie</li>
+      <li>⚠️ Сама статья не очень информативная (без годов и описаний камней) — использовать как <em>list-source</em>
+      и дальше гуглить конкретные выходы по именам</li>
+    </ul>
+  </div>
+</div>
+
+<h2>5. 📄 «О рубине легенды и мифы.txt» — главный исторический источник</h2>
+
+<div class="resource priority-high">
+  <h3>article_legends_myths.txt (40 KB)</h3>
+  <div class="r-meta">
+    <span class="tag high">Приоритет: ВЫСОКИЙ — главный текстовый источник</span>
+    <span class="tag">Тип: компилятивная статья (RU)</span>
+    <span class="tag">Полный текст ✅</span>
+  </div>
+
+  <div class="findings">
+    Самый ценный документ из присланных — Юля собрала <strong>всю историю рубина</strong> в одном файле.<br><br>
+
+    <strong>Покрытые темы:</strong><br>
+    • Этимология (rubeus / ratnaraj / ratnayaka)<br>
+    • Целебные свойства, рецепт волшебного эликсира (М.И. Пыляев), Парацельс<br>
+    • Поверья народов Востока («сила льва, бесстрашие орла, мудрость змеи»)<br>
+    • Алые корунды у царей: Иван Грозный, Густав III → Екатерина II, Петр I → курфюрст Бранденбургский,
+    князь Гагарин → Меньшиков<br>
+    • Научное определение по СТО 45866412-06-2008 (Гохран)<br>
+    • Драконьи легенды: бирманцы (яйцо дракона Нага), индийцы (кровь сражавшихся драконов), Плутарх (слёзы драконов)<br>
+    • Древнеиндийские трактаты: VI век до н.э., рубин = «король самоцветов»<br>
+    • <strong>Тимур (Тамерлан, 1336-1405)</strong> — «На его страшной седой голове — белая шапка с рубином…»<br>
+    • <strong>Нерон</strong> — рубин как роковой камень, римское безумие<br>
+    • <strong>Огюст Вернейль 1892</strong> — первый искусственный рубин, и связанный скандал с подменой<br>
+    • <strong>Бирма / Мьянма Mogok</strong> — легенды о трёх охотниках и землетрясении, орёл Лал<br>
+    • <strong>На Руси</strong>: «яхонт червчатый», шапка Мономаха, А.Д. Меньшиков, «яблоко великодержавное»<br>
+    • <strong>Pigeon's Blood history</strong>: впервые применён <em>Gemresearch Swisslab в 1996 г.</em>
+    Ади Перетти. В 2015 г. зарегистрирован как товарный знак.<br>
+    • <strong>Глаз дьявола</strong> — крупнейший кристалл, <strong>66 550 ct</strong>. Также «Великолепное
+    начало» (30 000+ ct, кабошон 6 465 ct) и «Большая мама» (10 041 ct).<br>
+    • <strong>Месторождение «Снежное» (Памир, Таджикистан)</strong> — 1970-е, советские геологи Россовский
+    и Дмитриев. Фиолетово-розовый оттенок.<br>
+    • Звёзды: Анна Нетребко, Моника Белуччи
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт (этот файл — основа исторического блока):</span>
+    <ul>
+      <li>Блок «<strong>Hook</strong>»: история бирманских воинов (зашитые рубины) или Тимура с рубином на шапке</li>
+      <li>Блок «<strong>Вперёд в прошлое</strong>»: VI век до н.э., индийские трактаты, ratnaraj</li>
+      <li>Блок «<strong>Российский след</strong>» (новый, на основе этого текста): Иван Грозный, Меньшиков,
+      «яблоко великодержавное», шапка Мономаха, Памирское «Снежное»</li>
+      <li>Блок «<strong>Pigeon Blood</strong>»: правильная история термина (1996, Перетти, GRS, 2015 →
+      товарный знак)</li>
+      <li>Блок «<strong>Искусственный рубин</strong>»: Вернейль 1892 + скандал с подменой</li>
+      <li>Блок «<strong>Драконы</strong>» (новый, для cold-open): три легенды разных культур про драконов</li>
+      <li>Блок «<strong>Самые крупные кристаллы</strong>»: Глаз дьявола, Великолепное начало, Большая мама</li>
+    </ul>
+  </div>
+</div>
+
+<h2>6. 🗺️ Карта месторождений рубинов мира (фото)</h2>
+
+<div class="resource priority-high">
+  <h3>photos/world_ruby_deposits_map.jpeg</h3>
+  <div class="r-meta">
+    <span class="tag high">Приоритет: ВЫСОКИЙ — готовый визуал</span>
+    <span class="tag">Тип: инфографика</span>
+    <span class="tag">Источник: Shigley 2010, GEMS &amp; GEMOLOGY Vol. 46 No. 3</span>
+  </div>
+
+  <div class="findings">
+    Французская карта <em>«Les gisements de rubis dans le monde»</em>. Показаны: Афганистан, Пакистан,
+    Индия, Шри-Ланка, <strong>Мьянма (выделено как principal pays extracteur)</strong>, Вьетнам, Таиланд,
+    Камбоджа, Танзания, Кения, Малави, Мадагаскар, Мозамбик, Австралия. Шкала 1000 km.
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт:</span>
+    <ul>
+      <li>Блок «<strong>Поле битвы / Месторождения</strong>»: показывать как анимированную карту с
+      «зажигающимися» точками</li>
+      <li>Можно перерисовать в инфографике канала с русскими названиями (для финального video — сейчас
+      легенда на французском)</li>
+      <li>B-roll: статичная карта поверх voiceover Юли об этих месторождениях</li>
+    </ul>
+  </div>
+</div>
+
+<h2>7. 🎨 Цветовая шкала рубинов (фото)</h2>
+
+<div class="resource priority-high">
+  <h3>photos/ruby_color_scale_gem_lovers.jpeg</h3>
+  <div class="r-meta">
+    <span class="tag high">Приоритет: ВЫСОКИЙ — готовый визуал</span>
+    <span class="tag">Тип: инфографика</span>
+    <span class="tag">Источник: Gem Lovers</span>
+  </div>
+
+  <div class="findings">
+    8 категорий красного оттенка, от ценного к менее ценному (по нашей классификации):<br>
+    <strong>Vivid Red</strong> · <strong>Strong Red</strong> · <strong>Deep Red</strong> ·
+    <strong>Slightly Purplish Red</strong> · <strong>Very Slightly Purplish Red</strong> ·
+    <strong>Dark Red</strong> · <strong>Dark Purplish Red</strong> · <strong>Pinkish Red</strong>.<br><br>
+
+    На фото для каждой категории — пары огранённых камней рядом, наглядно. Готовая инфографика для
+    объяснения, что такое <strong>Pigeon Blood</strong> (это категория Vivid Red с лёгкой пурпурной нотой).
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт:</span>
+    <ul>
+      <li>Блок «<strong>Эталон цвета / Pigeon Blood</strong>»: показать всю шкалу, выделить Vivid Red
+      («это и есть голубиная кровь»)</li>
+      <li>Блок «<strong>4C / Color</strong>»: лучшая визуализация различий, чем словесное объяснение</li>
+      <li>Hook-возможность: «<em>как ты думаешь, какой из этих 8 рубинов — самый дорогой? И почему?</em>» —
+      интерактив со зрителем</li>
+    </ul>
+  </div>
+</div>
+
+<h2>8. 📜 Федеральная пробирная палата (probpalata.gov.ru)</h2>
+
+<div class="resource unavailable">
+  <h3>probpalata.gov.ru/gemstones/precious/rubin/</h3>
+  <div class="r-meta">
+    <span class="tag unavail">Не открылся (timeout)</span>
+    <span class="tag">Тип: официальный gov-сайт</span>
+    <span class="tag">Приоритет: средний (для legal-цитат)</span>
+  </div>
+
+  <div class="findings">
+    Не удалось получить контент через WebFetch (60 сек таймаут). Открыть руками в браузере и зачерпнуть
+    официальные формулировки.
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт (если откроем):</span>
+    <ul>
+      <li>Блок «<strong>Российский закон</strong>»: точные формулировки ФЗ-41, СТО Гохрана 45866412-06-2008</li>
+      <li>Поддержка фразы Юли «российское законодательство туманно» — официальный источник для контраста</li>
+      <li>Lower priority — этот блок и так покрыт через интервью Юли + article_legends_myths.txt
+      (там уже есть СТО 45866412)</li>
+    </ul>
+  </div>
+</div>
+
+<h2>9. 💎 Дзен — ТОП-5 самых дорогих рубинов</h2>
+
+<div class="resource unavailable">
+  <h3>dzen.ru/a/X1-AglYiFCuTuZ6O</h3>
+  <div class="r-meta">
+    <span class="tag unavail">Требует Yandex SSO авторизацию</span>
+    <span class="tag">Тип: ювелирный блог lumerie.ru на Дзене</span>
+    <span class="tag">Приоритет: средний</span>
+  </div>
+
+  <div class="findings">
+    Дзен redirect через Yandex SSO. Открыть в браузере под аккаунтом Yandex.<br><br>
+    По названию: <em>ТОП-5 самых дорогих рубинов в мире</em>. Скорее всего пересечение с Sotheby's-аукционными
+    рекордами: Sunrise Ruby, Hope Ruby, Graff Ruby, Sunrise Ruby Necklace, и др.
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт (если откроем):</span>
+    <ul>
+      <li>Блок «<strong>Famous rubies / Аукционы</strong>»: топ-5 самый дорогих с историями</li>
+      <li>Покрывается также через <em>Гемс СПб</em> (есть Sunrise Ruby) и <em>article_legends_myths.txt</em>
+      (Тимур, Нерон, Иван Грозный)</li>
+      <li>Можно пропустить, если не открывается — приоритет средний</li>
+    </ul>
+  </div>
+</div>
+
+<h2>10. 📜 Livemaster — самые знаменитые рубины мира</h2>
+
+<div class="resource unavailable">
+  <h3>livemaster.ru/topic/3364204-blog-samye-znamenitye-rubiny-mira</h3>
+  <div class="r-meta">
+    <span class="tag unavail">Контент не отдаётся через WebFetch</span>
+    <span class="tag">Тип: ювелирный блог</span>
+    <span class="tag">Приоритет: средний</span>
+  </div>
+
+  <div class="findings">
+    Livemaster не отдаёт контент через WebFetch (видимо, JS-rendering). Открыть в браузере. По названию —
+    каталог знаменитых рубинов с историями.
+  </div>
+
+  <div class="script-map">
+    <span class="lbl">Куда в скрипт (если откроем):</span>
+    <ul>
+      <li>Дублирует ТОП-5 с Дзена и Famous rubies-блок article_legends_myths.txt</li>
+      <li>Низкий приоритет — основное покрыто другими источниками</li>
+    </ul>
+  </div>
+</div>
+
+<h2>📋 Что НЕТ в интервью Юли, но ЕСТЬ в её ресурсах</h2>
+
+<p>Сценаристу — обязательно дочитать. Эти факты не были озвучены, но материалы они есть и они <strong>сильнее
+устных объяснений</strong>:</p>
+
+<div class="alert">
+  <strong>1.</strong> Бурманская тиара Елизаветы II (96 рубинов / 96 лет) — НЕ упомянута в интервью, ТОЛЬКО в Marie Claire.
+</div>
+<div class="alert">
+  <strong>2.</strong> «Cursed» кольцо Сары Йоркской — НЕ упомянута в интервью, ТОЛЬКО в Marie Claire.
+</div>
+<div class="alert">
+  <strong>3.</strong> Полная LMHC-таблица кодов (TE1-TE5, F1-F3, C1-C3) — НЕ упомянуто в интервью. В интервью
+  Юля даёт только F/C/H/Be (упрощённо). Полная — в Гемцентре МГУ.
+</div>
+<div class="alert">
+  <strong>4.</strong> LOTUS Gemology коды (LGH, AS) — НЕ упомянуто в интервью. ТОЛЬКО в Гемцентре МГУ.
+</div>
+<div class="alert">
+  <strong>5.</strong> Tanzania Songea имеет «исключительную чистоту, одну из самых высоких в мире» — НЕ
+  упомянуто в интервью. ТОЛЬКО в Гемс СПб. Контр-интуитивный факт для скрипта.
+</div>
+<div class="alert">
+  <strong>6.</strong> Pigeon's Blood впервые в 1996 г. (Ади Перетти, Gemresearch Swisslab), товарный знак
+  с 2015 — Юля в интервью не уточняет дату, ТОЛЬКО в article_legends_myths.txt.
+</div>
+<div class="alert">
+  <strong>7.</strong> Глаз дьявола 66 550 ct (крупнейший кристалл) — НЕ упомянуто в интервью. ТОЛЬКО в
+  article_legends_myths.txt.
+</div>
+<div class="alert">
+  <strong>8.</strong> Памирское «Снежное» месторождение в Таджикистане (Россовский и Дмитриев, 1970-е) — НЕ
+  упомянуто в интервью. ТОЛЬКО в article_legends_myths.txt. <em>Российский след в рубине!</em>
+</div>
+<div class="alert">
+  <strong>9.</strong> Тимур и Нерон как исторические кейсы — НЕ упомянуто в интервью (Юля сказала «я не
+  археолог»). ТОЛЬКО в article_legends_myths.txt.
+</div>
+<div class="alert">
+  <strong>10.</strong> Полный список российских царских рубинов (Иван Грозный, Густав III → Екатерина II,
+  Петр I → курфюрст Бранденбургский) — НЕ упомянуто в интервью. ТОЛЬКО в article_legends_myths.txt.
+</div>
+
+<footer>
+  Сборник анализа подготовлен на базе 7 web-ссылок, 1 текстового файла и 2 фото от Юли + интервью 2026-05-07.
+  Из 10 ресурсов 7 успешно прочитаны через WebFetch, 3 — закрыты для автоматического парсинга
+  (Дзен, Livemaster, probpalata) — нужно открыть руками.
+</footer>
+
+</div>
+</body>
+</html>
